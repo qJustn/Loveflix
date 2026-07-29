@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LOVEFLIX ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+/* PROFILE SCREEN */
+
+#profiles{
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:#111;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+z-index:9000;
+
+}
+
+#profiles h1{
+
+font-size:60px;
+
+margin-bottom:60px;
+
+}
+
+.profileContainer{
+
+display:flex;
+
+gap:50px;
+
+}
+
+.profile{
+
+cursor:pointer;
+
+transition:.35s;
+
+text-align:center;
+
+}
+
+.profile:hover{
+
+transform:scale(1.08);
+
+}
+
+.profile img{
+
+width:180px;
+
+height:180px;
+
+object-fit:cover;
+
+border-radius:15px;
+
+border:5px solid transparent;
+
+transition:.35s;
+
+}
+
+.profile:hover img{
+
+border:5px solid #e50914;
+
+}
+
+.profile p{
+
+margin-top:20px;
+
+font-size:25px;
+
+font-weight:bold;
+
+}
+  /* MOVIE INFO */
+
+#movieInfo{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.85);
+
+z-index:99999;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+
+.movieBox{
+
+background:#181818;
+
+width:80%;
+
+max-width:700px;
+
+padding:40px;
+
+border-radius:15px;
+
+text-align:center;
+
+box-shadow:0 0 50px black;
+
+}
+
+
+
+.movieBox img{
+
+width:100%;
+
+border-radius:10px;
+
+}
+
+
+
+.movieBox h1{
+
+margin-top:25px;
+
+font-size:40px;
+
+}
+
+
+
+.movieBox p{
+
+font-size:20px;
+
+margin:20px;
+
+line-height:1.5;
+
+}
+
+
+
+#movieRating{
+
+font-size:25px;
+
+color:#ffd700;
+
+}
+
+
+
+.movieBox button{
+
+margin-top:25px;
+
+padding:15px 40px;
+
+font-size:20px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+
+
+#closeMovie{
+
+position:absolute;
+
+right:40px;
+
+top:30px;
+
+font-size:40px;
+
+cursor:pointer;
+
+}
+  /* SUCHFELD */
+
+#search{
+
+background:#222;
+
+border:1px solid #555;
+
+color:white;
+
+padding:10px 20px;
+
+border-radius:20px;
+
+font-size:16px;
+
+outline:none;
+
+width:180px;
+
+}
+
+
+#search:focus{
+
+width:250px;
+
+transition:.3s;
+
+}
+
+
+/* FILM INFO AUF KARTE */
+
+
+.movieCard{
+
+position:relative;
+
+}
+
+
+.info{
+
+position:absolute;
+
+bottom:5px;
+
+left:15px;
+
+font-size:14px;
+
+color:#ddd;
+
+opacity:0;
+
+transition:.3s;
+
+}
+
+
+.movieCard:hover .info{
+
+opacity:1;
+
+}
+
+
+/* TRAILER EFFEKT */
+
+
+.movieCard:hover img{
+
+filter:brightness(.65);
+
+}
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Montserrat,sans-serif;
+}
+
+body{
+background:#000;
+overflow:hidden;
+color:white;
+}
+
+/* INTRO */
+
+#intro{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.logo{
+font-size:90px;
+font-weight:900;
+letter-spacing:8px;
+color:#e50914;
+animation:intro 3s forwards;
+text-shadow:0 0 30px rgba(229,9,20,.5);
+}
+
+@keyframes intro{
+
+0%{
+opacity:0;
+transform:scale(.5);
+}
+
+40%{
+opacity:1;
+transform:scale(1.2);
+}
+
+70%{
+transform:scale(1);
+}
+
+100%{
+opacity:0;
+transform:scale(8);
+}
+
+}
+
+/* HAUPTSEITE */
+
+#app{
+
+display:none;
+
+width:100%;
+height:100vh;
+overflow:auto;
+background:#111;
+
+}
+
+header{
+
+height:75vh;
+
+background:url("hero.jpg") center/cover;
+
+position:relative;
+
+animation:heroAnimation 18s infinite alternate;
+
+}
+
+
+
+@keyframes heroAnimation{
+
+
+0%{
+
+background-position:center;
+
+transform:scale(1);
+
+}
+
+
+100%{
+
+background-position:center top;
+
+transform:scale(1.08);
+
+}
+
+
+}
+
+header::after{
+
+content:"";
+
+position:absolute;
+
+left:0;
+bottom:0;
+
+width:100%;
+height:250px;
+
+background:linear-gradient(transparent,#111);
+
+}
+
+nav{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+
+padding:20px 60px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:linear-gradient(rgba(0,0,0,.8),transparent);
+
+z-index:50;
+
+}
+
+.logoTop{
+
+font-size:35px;
+
+font-weight:900;
+
+color:#e50914;
+
+}
+
+.menu{
+
+display:flex;
+
+gap:35px;
+
+}
+
+.menu a{
+
+color:white;
+
+text-decoration:none;
+
+font-size:17px;
+
+transition:.3s;
+
+}
+
+.menu a:hover{
+
+color:#e50914;
+
+}
+
+.heroContent{
+
+position:absolute;
+
+left:70px;
+
+bottom:120px;
+
+max-width:700px;
+
+}
+
+.heroContent h1{
+
+font-size:70px;
+
+margin-bottom:15px;
+
+}
+
+.heroContent p{
+
+font-size:22px;
+
+line-height:1.6;
+
+margin-bottom:30px;
+
+}
+
+.play{
+
+padding:15px 45px;
+
+background:white;
+
+color:black;
+
+border:none;
+
+font-size:22px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.play:hover{
+
+transform:scale(1.05);
+
+}
+
+section{
+
+padding:40px 60px;
+
+}
+
+.rowTitle{
+
+font-size:30px;
+
+margin-bottom:20px;
+
+font-weight:700;
+
+}
+
+.cards{
+
+display:flex;
+
+gap:20px;
+
+overflow-x:auto;
+
+padding-bottom:15px;
+
+}
+
+.cards::-webkit-scrollbar{
+
+display:none;
+
+}
+
+.card{
+
+min-width:280px;
+
+height:160px;
+
+background:#222;
+
+border-radius:12px;
+
+overflow:hidden;
+
+position:relative;
+
+cursor:pointer;
+
+transition:.4s;
+
+}
+
+.card img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.card{
+
+min-width:280px;
+height:160px;
+background:#222;
+border-radius:12px;
+overflow:hidden;
+position:relative;
+cursor:pointer;
+transition:.35s;
+box-shadow:0 0 0 transparent;
+
+}
+
+.card:hover{
+
+transform:scale(1.12);
+
+box-shadow:0 15px 40px rgba(0,0,0,.7);
+
+z-index:10;
+
+}
+
+.card::after{
+
+content:"▶";
+
+position:absolute;
+
+right:15px;
+top:15px;
+
+width:45px;
+height:45px;
+
+background:rgba(0,0,0,.65);
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:20px;
+
+opacity:0;
+
+transition:.3s;
+
+}
+
+.card:hover::after{
+
+opacity:1;
+
+}
+
+.cardTitle{
+
+position:absolute;
+
+left:15px;
+
+bottom:15px;
+
+font-size:24px;
+
+font-weight:700;
+
+text-shadow:0 0 10px black;
+
+}
+
+footer{
+
+text-align:center;
+
+padding:80px;
+
+color:#aaa;
+
+}
+
+  /* PLAYER */
+
+#player{
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.95);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+z-index:99999;
+
+}
+
+#slide{
+
+width:80%;
+
+max-width:900px;
+
+text-align:center;
+
+}
+
+#slide img{
+
+width:100%;
+
+border-radius:12px;
+
+box-shadow:0 0 40px black;
+
+}
+
+#slideText{
+
+margin-top:30px;
+
+font-size:30px;
+
+font-weight:bold;
+
+}
+
+#closePlayer{
+
+position:absolute;
+
+top:30px;
+
+right:40px;
+
+font-size:45px;
+
+cursor:pointer;
+
+}
+/* LOVEFLIX ORIGINAL */
+
+
+.original{
+
+position:absolute;
+
+top:140px;
+
+left:70px;
+
+font-size:22px;
+
+letter-spacing:4px;
+
+font-weight:bold;
+
+color:#e50914;
+
+z-index:5;
+
+}
+
+
+
+/* TOP 10 */
+
+
+.topCard{
+
+height:190px;
+
+}
+
+
+.rank{
+
+position:absolute;
+
+left:10px;
+
+bottom:-5px;
+
+font-size:120px;
+
+font-weight:900;
+
+color:white;
+
+text-shadow:0 0 20px black;
+
+}
+
+
+
+/* VIDEO PLAYER */
+
+
+#videoPlayer{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:black;
+
+z-index:999999;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+#loveVideo{
+
+width:85%;
+
+max-width:1000px;
+
+}
+
+
+
+#closeVideo{
+
+position:absolute;
+
+right:40px;
+
+top:25px;
+
+font-size:45px;
+
+cursor:pointer;
+
+}
+/* BIRTHDAY MESSAGE */
+
+
+#birthday{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.95);
+
+z-index:9999999;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+.birthdayBox{
+
+max-width:800px;
+
+padding:50px;
+
+background:#181818;
+
+border-radius:20px;
+
+text-align:center;
+
+box-shadow:0 0 50px #e50914;
+
+}
+
+
+.birthdayBox h1{
+
+font-size:55px;
+
+color:#e50914;
+
+margin-bottom:30px;
+
+}
+
+
+.birthdayBox p{
+
+font-size:24px;
+
+line-height:1.7;
+
+}
+
+
+.birthdayBox button{
+
+margin-top:40px;
+
+padding:15px 40px;
+
+font-size:20px;
+
+border-radius:10px;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+
+
+/* HERZEN EFFECT */
+
+
+.magicHeart{
+
+position:fixed;
+
+font-size:35px;
+
+animation:magic 4s linear forwards;
+
+z-index:999999;
+
+}
+
+
+@keyframes magic{
+
+
+0%{
+
+transform:translateY(0) scale(1);
+
+opacity:1;
+
+}
+
+
+100%{
+
+transform:translateY(-100vh) scale(2);
+
+opacity:0;
+
+}
+
+}
+  /* SCROLL ANIMATION */
+
+
+.fadeSection{
+
+opacity:0;
+
+transform:translateY(40px);
+
+transition:1s;
+
+}
+
+
+
+.fadeSection.visible{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+
+
+/* BESSERE STREAMING OPTIK */
+
+
+section{
+
+position:relative;
+
+z-index:3;
+
+}
+
+
+
+.card img{
+
+transition:.5s;
+
+}
+
+
+
+.card:hover img{
+
+filter:brightness(.75);
+
+}
+  /* MOBILE OPTIMIERUNG */
+
+
+@media(max-width:768px){
+
+
+body{
+
+overflow-x:hidden;
+
+}
+
+
+
+/* NAVIGATION */
+
+
+nav{
+
+padding:15px 20px;
+
+}
+
+
+.logoTop{
+
+font-size:25px;
+
+}
+
+
+.menu{
+
+display:none;
+
+}
+
+
+
+/* HERO */
+
+
+header{
+
+height:65vh;
+
+}
+
+
+
+.heroContent{
+
+left:25px;
+
+bottom:80px;
+
+max-width:90%;
+
+}
+
+
+
+.heroContent h1{
+
+font-size:38px;
+
+}
+
+
+
+.heroContent p{
+
+font-size:16px;
+
+}
+
+
+
+.play{
+
+font-size:18px;
+
+padding:12px 30px;
+
+}
+
+
+
+/* KATEGORIEN */
+
+
+section{
+
+padding:30px 20px;
+
+}
+
+
+
+.rowTitle{
+
+font-size:24px;
+
+}
+
+
+
+.cards{
+
+gap:15px;
+
+}
+
+
+
+.card{
+
+min-width:220px;
+
+height:130px;
+
+}
+
+
+
+.cardTitle{
+
+font-size:18px;
+
+}
+
+
+
+/* PROFILE */
+
+
+#profiles h1{
+
+font-size:38px;
+
+text-align:center;
+
+}
+
+
+
+.profile img{
+
+width:130px;
+
+height:130px;
+
+}
+
+
+
+.profile p{
+
+font-size:18px;
+
+}
+
+
+
+/* FILM INFO */
+
+
+.movieBox{
+
+width:90%;
+
+padding:25px;
+
+}
+
+
+
+.movieBox h1{
+
+font-size:28px;
+
+}
+
+
+
+.movieBox p{
+
+font-size:17px;
+
+}
+
+
+
+/* VIDEO */
+
+
+#loveVideo{
+
+width:95%;
+
+}
+
+
+
+/* GEBURTSTAG */
+
+
+.birthdayBox{
+
+width:90%;
+
+padding:25px;
+
+}
+
+
+
+.birthdayBox h1{
+
+font-size:32px;
+
+}
+
+
+
+.birthdayBox p{
+
+font-size:18px;
+
+}
+
+
+}
+</style>
+
+</head>
+
+<body>
+  <div id="loading">
+
+LOVEFLIX ❤️
+
+</div>
+
+<div id="intro">
+
+<div class="logo">
+
+LOVEFLIX
+
+</div>
+
+</div>
+
+<div id="profiles">
+
+<h1>Wer schaut heute?</h1>
+
+<div class="profileContainer">
+
+<div class="profile" onclick="openLoveflix()">
+
+<img src="bilder/profil.jpg">
+
+<p>❤️ Meine Prinzessin ❤️</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="app">
+
+<nav>
+
+<div class="logoTop">
+
+LOVEFLIX
+
+</div>
+
+<div class="menu">
+
+<a href="#">Startseite</a>
+<a href="#">Unsere Geschichte</a>
+<a href="#">Urlaube</a>
+<a href="#">Für Immer ❤️</a>
+
+<input 
+id="search"
+type="text"
+placeholder="Suchen..."
+onkeyup="searchMovies()">
+
+</div>
+
+</nav>
+
+<header>
+  <div class="original">
+
+LOVEFLIX ORIGINAL ❤️
+
+</div>
+
+<div class="heroContent">
+
+<h1>Unsere Geschichte ❤️</h1>
+
+<p>
+
+Die schönste Serie meines Lebens.
+Jede Erinnerung ist eine neue Folge,
+und das Beste daran ist,
+dass sie niemals endet.
+
+</p>
+
+<button class="play" onclick="openVideo()">
+
+▶ Unsere Geschichte starten
+
+</button>
+
+</div>
+
+</header>
+
+<section>
+  <section>
+
+<div class="rowTitle">
+
+▶ Weiterschauen
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card continueCard" onclick="openMovie(
+'Unsere Geschichte ❤️',
+'Die schönsten Momente unseres Lebens zusammen.',
+'10/10 ⭐⭐⭐⭐⭐',
+'bilder/date1.jpg'
+)">
+
+<img loading="lazy" src="bilder/date1.jpg">
+
+<div class="cardTitle">
+
+Unsere Geschichte
+
+</div>
+
+</div>
+
+
+
+<div class="card continueCard" onclick="openMovie(
+'Unser Urlaub 🌍',
+'Neue Orte, neue Erinnerungen und unendlich viele Lacher.',
+'10/10 ⭐⭐⭐⭐⭐',
+'bilder/urlaub.jpg'
+)">
+
+
+<img src="bilder/urlaub.jpg">
+
+<div class="cardTitle">
+
+Unser Urlaub
+
+</div>
+
+</div>
+
+
+
+<div class="card continueCard" onclick="openMovie(
+'Unsere verrückten Momente 😂',
+'Die Momente, bei denen wir zusammen lachen mussten.',
+'10/10 ⭐⭐⭐⭐⭐',
+'bilder/lachen.jpg'
+)">
+
+
+<img src="bilder/lachen.jpg">
+
+<div class="cardTitle">
+
+Lustige Momente
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+<div class="rowTitle">
+
+Unsere Erinnerungen
+
+</div>
+
+<div class="cards">
+
+<div class="card movieCard"
+data-name="Erstes Date">
+
+
+<img loading="lazy" src="bilder/date1.jpg">
+
+
+<div class="cardTitle">
+
+Erstes Date
+
+</div>
+
+
+<div class="info">
+
+2024 • 8 Minuten ❤️
+
+</div>
+
+
+</div>
+
+<div class="card">
+
+<img src="bilder/urlaub.jpg">
+
+<div class="cardTitle">
+
+Unser Urlaub
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="bilder/lachen.jpg">
+
+<div class="cardTitle">
+
+Lustige Momente
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="bilder/liebe.jpg">
+
+<div class="cardTitle">
+
+Für Immer
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+  <section>
+
+<div class="rowTitle">
+
+Unsere schönsten Momente ❤️
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<img src="bilder/kuss.jpg">
+<div class="cardTitle">Unser erster Kuss</div>
+</div>
+
+<div class="card">
+<img src="bilder/essen.jpg">
+<div class="cardTitle">Date Night</div>
+</div>
+
+<div class="card">
+<img src="bilder/selfie.jpg">
+<div class="cardTitle">Selfies</div>
+</div>
+
+<div class="card">
+<img src="bilder/weihnachten.jpg">
+<div class="cardTitle">Weihnachten</div>
+</div>
+
+<div class="card">
+<img src="bilder/sonnenuntergang.jpg">
+<div class="cardTitle">Sonnenuntergänge</div>
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="rowTitle">
+
+Unsere Zukunft ✨
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<img src="bilder/urlaub2.jpg">
+<div class="cardTitle">Nächster Urlaub</div>
+</div>
+
+<div class="card">
+<img src="bilder/haus.jpg">
+<div class="cardTitle">Unser Traumhaus</div>
+</div>
+
+<div class="card">
+<img src="bilder/ringe.jpg">
+<div class="cardTitle">Für Immer</div>
+</div>
+
+</div>
+
+</section>
+  <section>
+
+
+<div class="rowTitle">
+
+🏆 Top 10 Momente, die ich niemals vergesse
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card topCard">
+
+<img loading="lazy" src="bilder/date1.jpg">
+
+<div class="rank">
+
+1
+
+</div>
+
+<div class="cardTitle">
+
+Unser Anfang ❤️
+
+</div>
+
+</div>
+
+
+
+<div class="card topCard">
+
+<img src="bilder/urlaub.jpg">
+
+<div class="rank">
+
+2
+
+</div>
+
+<div class="cardTitle">
+
+Unser Abenteuer 🌍
+
+</div>
+
+</div>
+
+
+
+<div class="card topCard">
+
+<img src="bilder/lachen.jpg">
+
+<div class="rank">
+
+3
+
+</div>
+
+<div class="cardTitle">
+
+Unsere Lacher 😂
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+<section>
+
+
+<div class="rowTitle">
+
+❤️ Warum ich dich liebe
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card loveCard" onclick="openLoveMessage()">
+
+<img src="bilder/liebe.jpg">
+
+<div class="cardTitle">
+
+100 Gründe ❤️
+
+</div>
+
+</div>
+
+
+
+<div class="card loveCard" onclick="openLoveMessage()">
+
+<img src="bilder/herz.jpg">
+
+<div class="cardTitle">
+
+Unsere Zukunft ✨
+
+</div>
+
+</div>
+
+
+
+<div class="card loveCard" onclick="openLoveMessage()">
+
+<img src="bilder/paar.jpg">
+
+<div class="cardTitle">
+
+Für immer wir
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</section>
+  <section class="fadeSection">
+
+
+<div class="rowTitle">
+
+🆕 Neu bei LOVEFLIX
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<img src="bilder/neuesbild.jpg">
+
+<div class="cardTitle">
+
+Neue Erinnerungen
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="bilder/neu2.jpg">
+
+<div class="cardTitle">
+
+Letzte Abenteuer
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="bilder/neu3.jpg">
+
+<div class="cardTitle">
+
+Noch mehr Liebe ❤️
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<section class="fadeSection">
+
+
+<div class="rowTitle">
+
+🔥 Beliebteste Erinnerungen
+
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<img loading="lazy" src="bilder/date1.jpg">
+
+<div class="cardTitle">
+
+Unser Anfang
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="bilder/lachen.jpg">
+
+<div class="cardTitle">
+
+Unsere Lacher
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<img src="bilder/urlaub.jpg">
+
+<div class="cardTitle">
+
+Unsere Reisen
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</section>
+<footer>
+
+Made with ❤️ nur für Dich.
+
+</footer>
+
+</div>
+
+<script>
+  const sections =
+document.querySelectorAll(".fadeSection");
+
+
+
+window.addEventListener("scroll",()=>{
+
+
+sections.forEach(section=>{
+
+
+let position =
+section.getBoundingClientRect().top;
+
+
+if(position < window.innerHeight - 100){
+
+
+section.classList.add("visible");
+
+
+}
+
+
+});
+
+
+});
+  function openVideo(){
+
+
+document.getElementById("videoPlayer")
+.style.display="flex";
+
+
+let video=document
+.getElementById("loveVideo");
+
+
+video.play();
+
+
+}
+
+
+
+document.getElementById("closeVideo")
+.onclick=function(){
+
+
+let video=document
+.getElementById("loveVideo");
+
+
+video.pause();
+
+
+video.currentTime=0;
+
+
+document.getElementById("videoPlayer")
+.style.display="none";
+
+
+}
+  document.querySelectorAll(".movieCard")
+.forEach(card=>{
+
+
+card.addEventListener("mouseenter",()=>{
+
+
+card.style.transform="scale(1.12)";
+
+
+});
+
+
+card.addEventListener("mouseleave",()=>{
+
+
+card.style.transform="scale(1)";
+
+
+});
+
+
+});
+  function searchMovies(){
+
+
+let input=document
+.getElementById("search")
+.value
+.toLowerCase();
+
+
+let cards=document
+.querySelectorAll(".movieCard");
+
+
+
+cards.forEach(card=>{
+
+
+let name=
+card.dataset.name
+.toLowerCase();
+
+
+
+if(name.includes(input)){
+
+
+card.style.display="block";
+
+
+}
+
+else{
+
+
+card.style.display="none";
+
+
+}
+
+
+
+});
+
+
+}
+  let currentMovie="";
+
+
+function openMovie(title,desc,rating,image){
+
+
+currentMovie=image;
+
+
+document.getElementById("movieInfo")
+.style.display="flex";
+
+
+document.getElementById("movieImage")
+.src=image;
+
+
+document.getElementById("movieTitle")
+.innerHTML=title;
+
+
+document.getElementById("movieDescription")
+.innerHTML=desc;
+
+
+document.getElementById("movieRating")
+.innerHTML=rating;
+
+
+}
+
+
+
+document.getElementById("closeMovie")
+.onclick=function(){
+
+document.getElementById("movieInfo")
+.style.display="none";
+
+};
+
+
+
+function playMemory(){
+
+
+document.getElementById("movieInfo")
+.style.display="none";
+
+
+player.style.display="flex";
+
+
+index=0;
+
+
+img.src=currentMovie;
+
+
+txt.innerHTML="Eine weitere wunderschöne Erinnerung ❤️";
+
+
+}
+
+setTimeout(()=>{
+
+document.getElementById("intro").style.display="none";
+
+document.getElementById("profiles").style.display="flex";
+
+},3200);
+
+function openLoveflix(){
+  function startMusic(){
+
+let music=document.getElementById("loveMusic");
+
+music.volume=0.25;
+
+music.play();
+
+}
+
+
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+
+heart.style.left=Math.random()*100+"%";
+
+heart.style.animationDuration=
+(5+Math.random()*5)+"s";
+
+
+document.getElementById("hearts")
+.appendChild(heart);
+
+
+setTimeout(()=>{
+
+heart.remove();
+
+},10000);
+
+}
+
+
+setInterval(createHeart,700);
+
+function openLoveflix(){
+
+document.getElementById("profiles").style.display="none";
+
+document.getElementById("app").style.display="block";
+
+document.body.style.overflow="auto";
+
+
+startMusic();
+
+}
+
+}
+  const bilder = [
+
+"bilder/date1.jpg",
+"bilder/urlaub.jpg",
+"bilder/lachen.jpg",
+"bilder/liebe.jpg"
+
+];
+
+const texte = [
+
+"Hier fing alles an ❤️",
+
+"Unser erster gemeinsamer Urlaub 🌍",
+
+"Mit dir lache ich am meisten 😂",
+
+"Ich liebe dich ❤️"
+
+];
+
+let index=0;
+
+const player=document.getElementById("player");
+
+const img=document.getElementById("slideImage");
+
+const txt=document.getElementById("slideText");
+
+document.querySelectorAll(".card").forEach(card=>{
+
+card.onclick=()=>{
+
+player.style.display="flex";
+
+index=0;
+
+img.src=bilder[index];
+
+txt.innerHTML=texte[index];
+
+}
+
+});
+
+setInterval(()=>{
+
+if(player.style.display==="flex"){
+
+index++;
+
+if(index>=bilder.length){
+
+index=0;
+
+}
+
+img.src=bilder[index];
+
+txt.innerHTML=texte[index];
+
+}
+
+},3000);
+
+document.getElementById("closePlayer").onclick=()=>{
+
+player.style.display="none";
+
+};
+
+document.addEventListener("keydown",e=>{
+
+if(e.key==="Escape"){
+
+player.style.display="none";
+
+}
+
+});
+function openLoveMessage(){
+
+
+document.getElementById("birthday")
+.style.display="flex";
+
+
+createMagicHearts();
+
+
+}
+
+
+
+function closeBirthday(){
+
+
+document.getElementById("birthday")
+.style.display="none";
+
+
+}
+
+
+
+function createMagicHearts(){
+
+
+for(let i=0;i<40;i++){
+
+
+let heart=document.createElement("div");
+
+
+heart.className="magicHeart";
+
+
+heart.innerHTML="❤️";
+
+
+heart.style.left=
+Math.random()*100+"%";
+
+
+heart.style.bottom="0px";
+
+
+heart.style.animationDuration=
+(2+Math.random()*3)+"s";
+
+
+document.body.appendChild(heart);
+
+
+
+setTimeout(()=>{
+
+
+heart.remove();
+
+
+},5000);
+
+
+}
+
+
+}
+</script>
+<!-- PLAYER -->
+
+<div id="player">
+
+<div id="closePlayer">✕</div>
+
+<div id="slide">
+
+<img id="slideImage" src="bilder/date1.jpg">
+
+<div id="slideText">
+
+Unsere Geschichte beginnt...
+
+</div>
+
+</div>
+
+</div>
+<div id="movieInfo">
+
+
+<div class="movieBox">
+
+
+<div id="closeMovie">
+
+✕
+
+</div>
+
+
+<img id="movieImage">
+
+
+<h1 id="movieTitle"></h1>
+
+
+<p id="movieDescription"></p>
+
+
+<div id="movieRating"></div>
+
+
+<button onclick="playMemory()">
+
+▶ Abspielen
+
+</button>
+
+
+</div>
+
+
+</div>
+  <div id="videoPlayer">
+
+
+<div id="closeVideo">
+
+✕
+
+</div>
+
+
+<video id="loveVideo" controls>
+
+
+<source src="videos/story.mp4" type="video/mp4">
+
+
+</video>
+
+
+</div>
+  <div id="birthday">
+
+
+<div class="birthdayBox">
+
+
+<h1>
+
+Alles Gute zum Geburtstag ❤️
+
+</h1>
+
+
+<p>
+
+Du bist nicht nur ein Teil meines Lebens,
+du bist mein Lieblingskapitel.
+
+Danke für jedes Lachen,
+jede Erinnerung und jeden Moment mit dir.
+
+Ich freue mich auf alle Folgen,
+die noch kommen werden. ❤️
+
+</p>
+
+
+<button onclick="closeBirthday()">
+
+Weiter schauen 🎬
+
+</button>
+
+
+</div>
+
+
+</div>
+</body>
+
+</html>
