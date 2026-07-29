@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>LOVEFLIX ❤️</title>
@@ -11,18 +12,17 @@
 
 <style>
 
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+font-family:Arial, Helvetica, sans-serif;
 }
 
 
 body{
 
-background:#111;
+background:#0f0f0f;
 color:white;
 overflow-x:hidden;
 
@@ -31,15 +31,10 @@ overflow-x:hidden;
 
 /* INTRO */
 
-
 #intro{
 
 position:fixed;
-top:0;
-left:0;
-
-width:100%;
-height:100vh;
+inset:0;
 
 background:black;
 
@@ -54,19 +49,20 @@ z-index:99999;
 
 .introLogo{
 
-font-size:90px;
-font-weight:900;
+font-size:clamp(45px,10vw,100px);
 
-color:#e50914;
+font-weight:900;
 
 letter-spacing:8px;
 
-animation:introAnimation 3s forwards;
+color:#e50914;
+
+animation:intro 3s forwards;
 
 }
 
 
-@keyframes introAnimation{
+@keyframes intro{
 
 
 0%{
@@ -96,8 +92,8 @@ transform:scale(5);
 }
 
 
-/* PROFILE */
 
+/* PROFILE */
 
 #profiles{
 
@@ -105,28 +101,31 @@ display:none;
 
 position:fixed;
 
-top:0;
-left:0;
-
-width:100%;
-height:100vh;
+inset:0;
 
 background:#111;
 
-z-index:9000;
+z-index:5000;
 
 align-items:center;
+
 justify-content:center;
 
 flex-direction:column;
 
+padding:20px;
+
 }
+
 
 
 #profiles h1{
 
-font-size:50px;
+font-size:clamp(30px,5vw,55px);
+
 margin-bottom:50px;
+
+text-align:center;
 
 }
 
@@ -134,6 +133,7 @@ margin-bottom:50px;
 .profile{
 
 text-align:center;
+
 cursor:pointer;
 
 transition:.3s;
@@ -143,19 +143,20 @@ transition:.3s;
 
 .profile:hover{
 
-transform:scale(1.1);
+transform:scale(1.08);
 
 }
 
 
 .profile img{
 
-width:180px;
-height:180px;
+width:min(45vw,180px);
 
-border-radius:15px;
+height:min(45vw,180px);
 
 object-fit:cover;
+
+border-radius:15px;
 
 border:4px solid transparent;
 
@@ -171,10 +172,13 @@ border-color:#e50914;
 
 .profile p{
 
-font-size:25px;
 margin-top:20px;
 
+font-size:22px;
+
 }
+
+
 
 
 
@@ -188,6 +192,7 @@ display:none;
 }
 
 
+
 nav{
 
 position:fixed;
@@ -197,7 +202,7 @@ left:0;
 
 width:100%;
 
-padding:20px 50px;
+padding:20px;
 
 display:flex;
 
@@ -205,16 +210,17 @@ justify-content:space-between;
 
 align-items:center;
 
-background:linear-gradient(#000,transparent);
-
 z-index:100;
+
+background:linear-gradient(#000,transparent);
 
 }
 
 
+
 .logo{
 
-font-size:35px;
+font-size:32px;
 
 font-weight:900;
 
@@ -223,73 +229,75 @@ color:#e50914;
 }
 
 
+
+.menu{
+
+display:flex;
+
+gap:20px;
+
+}
+
+
+
 .menu a{
 
 color:white;
 
 text-decoration:none;
 
-margin-left:25px;
-
 }
 
 
 
+
+/* HERO */
+
+
 header{
 
-height:80vh;
+height:85vh;
 
-background:url("bilder/hero.jpg") center/cover;
+background:
+linear-gradient(
+to top,
+#111,
+transparent 60%
+),
+url("bilder/hero.jpg");
+
+background-size:cover;
+
+background-position:center;
 
 display:flex;
 
 align-items:flex-end;
 
-padding:70px;
-
-position:relative;
+padding:clamp(20px,6vw,70px);
 
 }
 
-
-header:after{
-
-content:"";
-
-position:absolute;
-
-bottom:0;
-left:0;
-
-width:100%;
-height:250px;
-
-background:linear-gradient(transparent,#111);
-
-}
 
 
 .hero{
-
-position:relative;
-
-z-index:2;
 
 max-width:700px;
 
 }
 
 
+
 .hero h1{
 
-font-size:70px;
+font-size:clamp(35px,7vw,75px);
 
 }
 
 
 .hero p{
 
-font-size:22px;
+font-size:clamp(16px,2vw,24px);
 
 line-height:1.5;
 
@@ -298,19 +306,21 @@ margin:20px 0;
 }
 
 
-button{
 
-padding:15px 35px;
+button{
 
 border:none;
 
-border-radius:8px;
+padding:15px 35px;
 
-font-size:20px;
+border-radius:10px;
+
+font-size:18px;
 
 cursor:pointer;
 
 }
+
 
 
 .play{
@@ -320,14 +330,18 @@ background:white;
 }
 
 
-/* KARTEN */
+
+
+
+/* KATEGORIEN */
 
 
 section{
 
-padding:40px 50px;
+padding:40px clamp(15px,5vw,60px);
 
 }
+
 
 
 .title{
@@ -339,6 +353,7 @@ margin-bottom:20px;
 }
 
 
+
 .cards{
 
 display:flex;
@@ -347,7 +362,18 @@ gap:20px;
 
 overflow-x:auto;
 
+scrollbar-width:none;
+
 }
+
+
+
+.cards::-webkit-scrollbar{
+
+display:none;
+
+}
+
 
 
 .card{
@@ -356,11 +382,11 @@ min-width:280px;
 
 height:160px;
 
-position:relative;
-
-border-radius:12px;
+border-radius:15px;
 
 overflow:hidden;
+
+position:relative;
 
 cursor:pointer;
 
@@ -369,11 +395,13 @@ transition:.3s;
 }
 
 
+
 .card:hover{
 
 transform:scale(1.08);
 
 }
+
 
 
 .card img{
@@ -384,6 +412,7 @@ height:100%;
 object-fit:cover;
 
 }
+
 
 
 .card span{
@@ -403,22 +432,19 @@ text-shadow:0 0 10px black;
 }
 
 
+
 /* PLAYER */
 
 
-#player{
+#memoryPlayer{
 
 display:none;
 
 position:fixed;
 
-top:0;
-left:0;
+inset:0;
 
-width:100%;
-height:100%;
-
-background:black;
+background:rgba(0,0,0,.95);
 
 z-index:99999;
 
@@ -428,12 +454,15 @@ justify-content:center;
 
 flex-direction:column;
 
+padding:20px;
+
 }
 
 
-#player img{
 
-max-width:80%;
+#memoryPlayer img{
+
+max-width:90%;
 
 max-height:70%;
 
@@ -442,22 +471,26 @@ border-radius:15px;
 }
 
 
-#playerText{
+
+#memoryText{
 
 font-size:30px;
 
-margin-top:30px;
+margin-top:25px;
+
+text-align:center;
 
 }
 
 
-#close{
+
+.close{
 
 position:absolute;
 
-right:40px;
+top:25px;
 
-top:30px;
+right:30px;
 
 font-size:40px;
 
@@ -486,7 +519,9 @@ LOVEFLIX
 
 
 
-<!-- PROFILE AUSWAHL -->
+
+
+<!-- PROFILE -->
 
 
 <div id="profiles">
@@ -499,7 +534,7 @@ Wer schaut heute? ❤️
 </h1>
 
 
-<div class="profile" onclick="startLoveflix()">
+<div class="profile" onclick="startApp()">
 
 
 <img src="bilder/profil.jpg">
@@ -521,10 +556,12 @@ Meine Prinzessin ❤️
 
 
 
-<!-- HAUPT APP -->
+
+<!-- HAUPTSEITE -->
 
 
 <div id="app">
+
 
 
 <audio id="music" loop>
@@ -533,9 +570,6 @@ Meine Prinzessin ❤️
 
 </audio>
 
-
-
-<div id="hearts"></div>
 
 
 
@@ -553,14 +587,14 @@ LOVEFLIX
 
 <a href="#">
 
-Startseite
+Start
 
 </a>
 
 
 <a href="#">
 
-Unsere Geschichte
+Unsere Story
 
 </a>
 
@@ -571,10 +605,13 @@ Für immer ❤️
 
 </a>
 
+
 </div>
 
 
 </nav>
+
+
 
 
 
@@ -595,15 +632,16 @@ Unsere Geschichte ❤️
 <p>
 
 Die schönste Serie meines Lebens.
-Jede Erinnerung ist eine neue Folge.
-Und unsere Geschichte hat kein Ende.
+Jede Erinnerung ist eine Folge,
+die ich niemals überspringen möchte.
 
 </p>
 
 
+
 <button class="play" onclick="openVideo()">
 
-▶ Unsere Geschichte starten
+▶ Unsere Geschichte
 
 </button>
 
@@ -612,6 +650,8 @@ Und unsere Geschichte hat kein Ende.
 
 
 </header>
+
+
 
 
 
@@ -627,19 +667,23 @@ Und unsere Geschichte hat kein Ende.
 </div>
 
 
+
 <div class="cards">
 
 
 
-<div class="card" onclick="openMemory('bilder/date.jpg','Unser Anfang ❤️')">
+<div class="card" onclick="openMemory('bilder/date.jpg','Unser erstes Date ❤️')">
+
 
 <img src="bilder/date.jpg">
 
+
 <span>
 
-Unser erstes Date
+Unser Anfang
 
 </span>
+
 
 </div>
 
@@ -648,7 +692,9 @@ Unser erstes Date
 
 <div class="card" onclick="openMemory('bilder/urlaub.jpg','Unsere Abenteuer 🌍')">
 
+
 <img src="bilder/urlaub.jpg">
+
 
 <span>
 
@@ -656,14 +702,18 @@ Unsere Reisen
 
 </span>
 
+
 </div>
+
 
 
 
 
 <div class="card" onclick="openMemory('bilder/lachen.jpg','Unsere lustigsten Momente 😂')">
 
+
 <img src="bilder/lachen.jpg">
+
 
 <span>
 
@@ -671,14 +721,18 @@ Unsere Lacher
 
 </span>
 
+
 </div>
+
 
 
 
 
 <div class="card" onclick="openMemory('bilder/liebe.jpg','Für immer wir ❤️')">
 
+
 <img src="bilder/liebe.jpg">
+
 
 <span>
 
@@ -686,13 +740,16 @@ Für immer
 
 </span>
 
-</div>
-
-
 
 </div>
+
+
+</div>
+
 
 </section>
+
+
 
 
 
@@ -704,9 +761,10 @@ Für immer
 
 <div class="title">
 
-🏆 Top Momente
+🏆 Top Erinnerungen
 
 </div>
+
 
 
 <div class="cards">
@@ -718,9 +776,10 @@ Für immer
 
 <span>
 
-1. Unser Anfang
+1. Wie alles begann
 
 </span>
+
 
 </div>
 
@@ -736,6 +795,7 @@ Für immer
 
 </span>
 
+
 </div>
 
 
@@ -750,6 +810,7 @@ Für immer
 
 </span>
 
+
 </div>
 
 
@@ -762,26 +823,24 @@ Für immer
 
 
 
-<!-- PLAYER -->
+
+<!-- FOTO PLAYER -->
 
 
-<div id="player">
+<div id="memoryPlayer">
 
 
-<div id="close" onclick="closePlayer()">
+<div class="close" onclick="closeMemory()">
 
 ✕
 
 </div>
-
 
 
 <img id="memoryImage">
 
 
-<div id="playerText">
-
-</div>
+<div id="memoryText"></div>
 
 
 </div>
@@ -790,20 +849,22 @@ Für immer
 
 
 
-<!-- VIDEO -->
 
 
-<div id="videoBox" style="display:none;">
+<!-- VIDEO PLAYER -->
 
 
-<div id="closeVideo" onclick="closeVideo()">
+<div id="videoPlayer" style="display:none;position:fixed;inset:0;background:black;z-index:999999;align-items:center;justify-content:center;">
+
+
+<div class="close" onclick="closeVideo()">
 
 ✕
 
 </div>
 
 
-<video id="video" controls>
+<video id="video" controls style="width:90%;max-width:1000px;">
 
 
 <source src="videos/story.mp4" type="video/mp4">
@@ -818,32 +879,38 @@ Für immer
 
 
 
+
 <!-- GEBURTSTAG -->
 
 
-<div id="birthday">
+<div id="birthday" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999999;align-items:center;justify-content:center;padding:20px;">
 
 
-<div>
+
+<div style="background:#181818;padding:40px;border-radius:20px;text-align:center;max-width:700px;">
 
 
-<h1>
+<h1 style="color:#e50914;">
 
 Alles Gute zum Geburtstag ❤️
 
 </h1>
 
 
-<p>
+
+<p style="font-size:22px;line-height:1.6;margin:30px;">
+
 
 Du bist mein Lieblingsmensch.
-Danke für jede Erinnerung,
-jedes Lachen und jeden Moment mit dir.
+
+Danke für jedes Lachen,
+jede Erinnerung und jeden Moment mit dir.
 
 Ich freue mich auf alle Kapitel,
 die noch kommen werden.
 
 ❤️
+
 
 </p>
 
@@ -859,10 +926,19 @@ Weiter schauen 🎬
 
 
 </div>
+
+
+
+
+
+
+
+
+
 <script>
 
 
-// INTRO -> PROFILE
+// INTRO
 
 
 setTimeout(()=>{
@@ -880,10 +956,11 @@ document.getElementById("profiles").style.display="flex";
 
 
 
-// LOVEFLIX STARTEN
+
+// APP START
 
 
-function startLoveflix(){
+function startApp(){
 
 
 document.getElementById("profiles").style.display="none";
@@ -896,14 +973,14 @@ document.getElementById("app").style.display="block";
 let music=document.getElementById("music");
 
 
-music.volume=0.25;
+music.volume=.25;
 
 
 music.play().catch(()=>{});
 
 
 
-createHearts();
+startHearts();
 
 
 }
@@ -913,10 +990,12 @@ createHearts();
 
 
 
-// HERZEN ANIMATION
 
 
-function createHearts(){
+// HERZEN
+
+
+function startHearts(){
 
 
 setInterval(()=>{
@@ -930,21 +1009,15 @@ heart.innerHTML="❤️";
 
 heart.style.position="fixed";
 
-
 heart.style.bottom="-30px";
-
 
 heart.style.left=Math.random()*100+"%";
 
+heart.style.fontSize="30px";
 
-heart.style.fontSize=(20+Math.random()*30)+"px";
+heart.style.zIndex="1000";
 
-
-heart.style.zIndex="500";
-
-
-heart.style.animation="float 6s linear";
-
+heart.style.animation="heartMove 6s linear";
 
 
 document.body.appendChild(heart);
@@ -953,16 +1026,13 @@ document.body.appendChild(heart);
 
 setTimeout(()=>{
 
-
 heart.remove();
-
 
 },6000);
 
 
 
-},700);
-
+},800);
 
 
 }
@@ -971,27 +1041,22 @@ heart.remove();
 
 
 
-
-// MEMORY PLAYER
+// FOTO ÖFFNEN
 
 
 function openMemory(image,text){
 
 
-
-document.getElementById("player")
+document.getElementById("memoryPlayer")
 .style.display="flex";
-
 
 
 document.getElementById("memoryImage")
 .src=image;
 
 
-
-document.getElementById("playerText")
+document.getElementById("memoryText")
 .innerHTML=text;
-
 
 
 }
@@ -999,11 +1064,10 @@ document.getElementById("playerText")
 
 
 
+function closeMemory(){
 
-function closePlayer(){
 
-
-document.getElementById("player")
+document.getElementById("memoryPlayer")
 .style.display="none";
 
 
@@ -1015,24 +1079,21 @@ document.getElementById("player")
 
 
 
-// VIDEO PLAYER
+// VIDEO
 
 
 function openVideo(){
 
 
-document.getElementById("videoBox")
+document.getElementById("videoPlayer")
 .style.display="flex";
 
 
-let video=document.getElementById("video");
-
-
-video.play();
+document.getElementById("video")
+.play();
 
 
 }
-
 
 
 
@@ -1048,7 +1109,7 @@ video.pause();
 video.currentTime=0;
 
 
-document.getElementById("videoBox")
+document.getElementById("videoPlayer")
 .style.display="none";
 
 
@@ -1059,7 +1120,7 @@ document.getElementById("videoBox")
 
 
 
-// GEBURTSTAGS POPUP
+// GEBURTSTAG
 
 
 function openBirthday(){
@@ -1086,7 +1147,9 @@ document.getElementById("birthday")
 
 
 
-// ESC SCHLIESST ALLES
+
+
+// ESC
 
 
 document.addEventListener("keydown",(e)=>{
@@ -1095,11 +1158,9 @@ document.addEventListener("keydown",(e)=>{
 if(e.key==="Escape"){
 
 
-closePlayer();
-
+closeMemory();
 
 closeVideo();
-
 
 closeBirthday();
 
@@ -1115,13 +1176,14 @@ closeBirthday();
 
 
 
+
+
+
+
 <style>
 
 
-/* HERZEN */
-
-
-@keyframes float{
+@keyframes heartMove{
 
 
 from{
@@ -1146,190 +1208,9 @@ opacity:0;
 
 
 
-/* VIDEO */
-
-
-#videoBox{
-
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-background:black;
-
-z-index:999999;
-
-display:none;
-
-align-items:center;
-
-justify-content:center;
-
-
-}
-
-
-
-#video{
-
-
-width:80%;
-
-max-width:1000px;
-
-
-}
-
-
-
-#closeVideo{
-
-
-position:absolute;
-
-top:30px;
-
-right:40px;
-
-font-size:40px;
-
-cursor:pointer;
-
-
-}
-
-
-
-
-/* GEBURTSTAG */
-
-
-#birthday{
-
-
-display:none;
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-background:rgba(0,0,0,.95);
-
-z-index:9999999;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
-
-
-}
-
-
-
-#birthday div{
-
-
-max-width:700px;
-
-padding:50px;
-
-background:#181818;
-
-border-radius:20px;
-
-box-shadow:0 0 50px #e50914;
-
-
-}
-
-
-
-#birthday h1{
-
-
-color:#e50914;
-
-font-size:45px;
-
-
-}
-
-
-
-#birthday p{
-
-
-font-size:22px;
-
-line-height:1.6;
-
-margin:30px;
-
-
-}
-
-
-
-
-/* HANDY */
 
 
 @media(max-width:700px){
-
-
-.introLogo{
-
-font-size:45px;
-
-}
-
-
-#profiles h1{
-
-font-size:35px;
-
-}
-
-
-
-header{
-
-padding:30px;
-
-height:70vh;
-
-}
-
-
-
-.hero h1{
-
-font-size:40px;
-
-}
-
-
-
-.hero p{
-
-font-size:17px;
-
-}
 
 
 
@@ -1357,25 +1238,49 @@ display:none;
 
 
 
+header{
+
+height:75vh;
+
+}
+
+
+
+.hero h1{
+
+font-size:40px;
+
+}
+
+
+
+.hero p{
+
+font-size:16px;
+
+}
+
+
+
 .card{
 
-min-width:220px;
+min-width:230px;
 
-height:130px;
-
-}
-
-
-
-#memoryImage{
-
-max-width:90%;
+height:140px;
 
 }
 
 
 
-#playerText{
+.title{
+
+font-size:25px;
+
+}
+
+
+
+#memoryText{
 
 font-size:22px;
 
@@ -1385,7 +1290,10 @@ font-size:22px;
 }
 
 
+
 </style>
+
+
 
 
 
